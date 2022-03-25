@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soilpedia_lk/pages/navPages/camTest.dart';
+import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/widgets/appLargeText.dart';
 
 class HomePage1 extends StatefulWidget {
@@ -29,9 +30,15 @@ class _HomePage1State extends State<HomePage1> with TickerProviderStateMixin {
                 ),
                 Expanded(child: Container()),
                 Container(
-                  child: Icon(
-                    Icons.person,
+                  child: IconButton(
+                    icon: const Icon(Icons.person),
                     color: Colors.white,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    },
                   ),
                   margin: const EdgeInsets.only(right: 28),
                   width: 50,
