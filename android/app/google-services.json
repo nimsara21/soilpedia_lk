@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "993653292384",
+    "project_id": "sign-in-page-1ebaa",
+    "storage_bucket": "sign-in-page-1ebaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993653292384:android:1cc59c8b1ffa2f03eab205",
+        "android_client_info": {
+          "package_name": "com.example.soilpedia_lk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993653292384-68iascbgk6i8ul37slks2mk0jlaai3qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soilpedia_lk",
+            "certificate_hash": "d2f87bba02fadb4d6910b5e45791e885232b2e3d"
+          }
+        },
+        {
+          "client_id": "993653292384-oe09941lq6l8abtqpqcce83qpbarfcov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH9Z3SIrt6ihEdKnZREe_SWFHXOSo1GFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993653292384-oe09941lq6l8abtqpqcce83qpbarfcov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
