@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:soilpedia_lk/main.dart';
@@ -26,6 +28,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   File? _image;
+  String url = "";
 
   final imagePicker = ImagePicker();
   Future getImage() async {
@@ -34,6 +37,22 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _image = File(image!.path);
     });
+  }
+
+  uploadFile() async {
+    String name = DateTime.now().millisecondsSinceEpoch.toString();
+    var imageFile = FirebaseStorage.instance.ref().child(name).child("/.jpg");
+    UploadTask task = imageFile.putFile(_image!);
+    TaskSnapshot snapshot = await task;
+
+    //for downloading
+    url = await snapshot.ref.getDownloadURL();
+    await FirebaseFirestore.instance
+        .collection("images")
+        .doc()
+        .set({"imageUrl": url});
+
+    print(url);
   }
 
   @override
@@ -85,7 +104,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          uploadFile();
+        },
         child: Text('Select'),
         backgroundColor: Colors.green[700],
       ),

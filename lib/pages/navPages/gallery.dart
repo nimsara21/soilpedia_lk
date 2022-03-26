@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +43,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   uploadFile() async {
-    var imageFile = FirebaseStorage.instance.ref().child("path").child("/.jpg");
+    String name = DateTime.now().millisecondsSinceEpoch.toString();
+    var imageFile = FirebaseStorage.instance.ref().child(name).child("/.jpg");
     UploadTask task = imageFile.putFile(_image!);
     TaskSnapshot snapshot = await task;
 
     //for downloading
-
     url = await snapshot.ref.getDownloadURL();
+    await FirebaseFirestore.instance
+        .collection("images")
+        .doc()
+        .set({"imageUrl": url});
+
     print(url);
   }
 
