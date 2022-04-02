@@ -10,6 +10,7 @@ import 'package:soilpedia_lk/screen/signup_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 import '../reusable/reusable.dart';
 
+//singin screen
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
@@ -26,6 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
+        //background design
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
           hexStringToColor("0a264f"),
@@ -54,12 +56,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 forgetPassword(context),
                 signInSignUpResetButton(context, "Sign In", () {
-                  FirebaseAuth.instance
+                  FirebaseAuth.instance //sign in with email and password
                       .signInWithEmailAndPassword(
                           email: _emailTextController.text,
                           password: _passwordTextController.text)
                       .then((value) {
-                    Navigator.push(context,
+                    Navigator.push(
+                        context, //return to the main page
                         MaterialPageRoute(builder: (context) => MainPage()));
                   }).onError((error, stackTrace) {
                     print("Error ${error.toString()}");
@@ -82,7 +85,8 @@ class _SignInScreenState extends State<SignInScreen> {
             style: TextStyle(color: Colors.white)),
         GestureDetector(
           onTap: () {
-            Navigator.push(context,
+            Navigator.push(
+                context, //loading registration screen
                 MaterialPageRoute(builder: (context) => SignUpScreen()));
           },
           child: const Text(
@@ -105,8 +109,11 @@ class _SignInScreenState extends State<SignInScreen> {
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ResetPasswordScreen())),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ResetPasswordScreen())), //loading password screen
       ),
     );
   }

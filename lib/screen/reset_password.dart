@@ -4,6 +4,7 @@ import 'package:soilpedia_lk/reusable/reusable.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 
+//resetting password
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({Key? key}) : super(key: key);
 
@@ -11,6 +12,7 @@ class ResetPasswordScreen extends StatefulWidget {
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
 
+//resetting password via mail
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   TextEditingController _emailTextController = TextEditingController();
   @override
@@ -28,6 +30,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
+            //background design
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
               hexStringToColor("0a264f"),
@@ -48,10 +51,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     height: 20,
                   ),
                   signInSignUpResetButton(context, "Reset Password", () {
-                    FirebaseAuth.instance
+                    FirebaseAuth.instance //sending resetting password link
                         .sendPasswordResetEmail(
                             email: _emailTextController.text)
-                        .then((value) => Navigator.of(context).pop());
+                        .then((value) => Navigator.of(context)
+                            .pop()); //return to the sign in page
                   }),
                 ],
               ),
