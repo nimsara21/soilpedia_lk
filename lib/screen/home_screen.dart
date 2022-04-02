@@ -8,14 +8,15 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
-//hiiiii
 
+//profile screen
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
+          //logout button
           child: Text("Logout"),
           onPressed: () {
             FirebaseAuth.instance.signOut().then((value) {
