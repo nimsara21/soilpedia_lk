@@ -113,7 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    ResetPasswordScreen())), //loading password screen
+                    ResetPasswordScreen())), //load password screen
       ),
     );
   }
