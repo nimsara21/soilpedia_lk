@@ -4,6 +4,7 @@ import 'package:soilpedia_lk/reusable/reusable.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 
+//sign up screen
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -30,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
+            //background design
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
               hexStringToColor("0a264f"),
@@ -60,17 +62,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   signInSignUpResetButton(context, "Sign Up", () {
-                    FirebaseAuth.instance
+                    FirebaseAuth.instance //sign up with email and password
                         .createUserWithEmailAndPassword(
                             email: _emailTextController.text,
                             password: _passwordTextController.text)
                         .then((value) {
-                          print("Created New Account");
+                      print("Created New Account");
                       Navigator.push(
-                          context,
+                          context, //return to the home page
                           MaterialPageRoute(
                               builder: (context) => HomeScreen()));
-                    }).onError((error, stackTrace){
+                    }).onError((error, stackTrace) {
                       print("Error $toString()");
                     });
                   })
