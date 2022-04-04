@@ -103,7 +103,8 @@ class _HomePageState extends State<HomePage> {
         .set({"imageUrl": url});
 
     print(url);
-    enc = link + url;
+    enc = link +
+        "https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsign-in-page-1ebaa.appspot.com%2Fo%2F1648985227598%252F.jpg%3Falt%3Dmedia%26token%3Df60ba203-1059-4b27-a4b9-d34ac2249c66";
   }
 
   @override
@@ -171,9 +172,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           uploadFile();
-          print(enc);
-          late Future<Album> futureAlbum;
+          print(" yooooooooooooooooooooooo");
 
+          late Future<Album> futureAlbum;
           @override
           void initState() {
             super.initState();
