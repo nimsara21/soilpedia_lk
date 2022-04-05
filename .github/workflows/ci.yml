@@ -7,11 +7,7 @@ on:
 jobs:
   flutter_test:
     name: Run flutter test and analyze
-<<<<<<< HEAD
     runs-on: ubuntu-latest
-=======
-    
->>>>>>> 3a532aab04625615ffa8cc4f44bda61b3b5de7dd
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
@@ -54,8 +50,4 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter clean
-<<<<<<< HEAD
       - run: flutter build appbundle
-=======
-      - run: flutter build appbundle
->>>>>>> 3a532aab04625615ffa8cc4f44bda61b3b5de7dd
