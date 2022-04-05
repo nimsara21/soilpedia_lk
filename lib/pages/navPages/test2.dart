@@ -13,6 +13,7 @@ Future<Album> fetchAlbum() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     var jsonResoponse = convert.jsonDecode(response.body);
+    //getting json response
     print(jsonResoponse);
     return jsonResoponse;
   } else {
