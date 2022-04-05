@@ -3,7 +3,7 @@ on: push
 
 jobs:
   flutter_test:
-    name: Run flutter test and analyze
+    name: Run flutter test 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,7 +14,6 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter analyze
       - run: flutter test
 
   build_ios:
