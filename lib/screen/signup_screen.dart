@@ -31,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
+              //new 
                 gradient: LinearGradient(colors: [
               hexStringToColor("#001921"),
               hexStringToColor("#2C7744"),
