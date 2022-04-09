@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<Album> fetchAlbum() async {
-  final response = await http.get(Uri.parse(
-      'http://34.66.246.198/?img=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsign-in-page-1ebaa.appspot.com%2Fo%2F1648985227598%252F.jpg%3Falt%3Dmedia%26token%3Df60ba203-1059-4b27-a4b9-d34ac2249c66'));
+  String link = "http://34.66.246.198/?img=";
+  String enc = Uri.encodeComponent(
+      "https://firebasestorage.googleapis.com/v0/b/sign-in-page-1ebaa.appspot.com/o/1648856349486%2F.jpg?alt=media&token=e8e8487a-9b48-4bec-8dd0-20763234ee96");
+  String url = link + enc;
+  final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
