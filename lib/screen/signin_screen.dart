@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:soilpedia_lk/pages/homePage.dart';
-import 'package:soilpedia_lk/pages/navPages/camTest.dart';
-import 'package:soilpedia_lk/pages/navPages/gallery.dart';
+
 import 'package:soilpedia_lk/pages/navPages/mainPage.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/screen/reset_password.dart';
