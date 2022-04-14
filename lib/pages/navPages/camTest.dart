@@ -128,20 +128,6 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Positioned(
-              child: FutureBuilder<Album>(
-            future: futureAlbum,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text("snapshot.data!.title");
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          )),
-          Positioned(
             child: Image.asset('assets/images/pic1.jpg'),
           ),
           Positioned(
