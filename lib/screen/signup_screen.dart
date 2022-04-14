@@ -32,9 +32,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-              hexStringToColor("0a264f"),
-              hexStringToColor("6c2396"),
-              hexStringToColor("39093d")
+              hexStringToColor("#787878"),
+              hexStringToColor("#763420"),
+              hexStringToColor("#098765")
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
             child: SingleChildScrollView(
                 child: Padding(
