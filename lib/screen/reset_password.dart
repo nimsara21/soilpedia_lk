@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:soilpedia_lk/reusable/reusable.dart';
-import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -12,7 +11,7 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +35,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
             child: SingleChildScrollView(
                 child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 120, 20, 0),
               child: Column(
                 children: <Widget>[
                   const SizedBox(
