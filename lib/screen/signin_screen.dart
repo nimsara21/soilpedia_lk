@@ -48,6 +48,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 5,
                 ),
+                /*----------------------------------------------------------------------------
+                const Text(
+                  'The password you entered is incorrect. Please try again.',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                */
                 forgetPassword(context),
                 signInSignUpResetButton(context, "Sign In", () {
                   FirebaseAuth.instance
@@ -91,6 +99,7 @@ class _SignInScreenState extends State<SignInScreen> {
       ],
     );
   }
+
 
   Widget forgetPassword(BuildContext context) {
     return Container(
