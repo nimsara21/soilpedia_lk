@@ -4,6 +4,8 @@ import 'package:soilpedia_lk/reusable/reusable.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 
+import '../pages/navPages/mainPage.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -65,12 +67,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text)
                         .then((value) {
-                          print("Created New Account");
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
-                    }).onError((error, stackTrace){
+                      print("Created New Account");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MainPage()));
+                    }).onError((error, stackTrace) {
                       print("Error $toString()");
                     });
                   })

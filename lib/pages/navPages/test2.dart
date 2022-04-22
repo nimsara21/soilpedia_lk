@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               left: 126,
               width: 150,
               height: 60,
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('Go to Second Screen'),
                 onPressed: () {
                   Navigator.push(
@@ -115,7 +115,7 @@ class _MySecondPageState extends State<MySecondPage> {
         title: Text('Second Screen'),
       ),
       body: Center(
-        child: RaisedButton(
+        child: ElevatedButton(
           child: Text('Go back to Home Screen'),
           onPressed: () {
             Navigator.pop(context);

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -8,12 +10,11 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:soilpedia_lk/main.dart';
 
-class myNum {
-  static late String yo;
+void main() {
+  runApp(CameraPage());
 }
 
 class CameraPage extends StatelessWidget {
-  late String value;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,9 +23,15 @@ class CameraPage extends StatelessWidget {
   }
 }
 
-Future<Album> fetchAlbum() async {
-  final response = await http
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+Future<Album> fetchAlbum(String encodedUrl) async {
+  final response = await http.get(Uri.parse(encodedUrl));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -38,46 +45,20 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
-  final String title;
+  final int soilId;
 
   const Album({
-    required this.title,
+    required this.soilId,
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      title: json['title'],
+      soilId: json['soilId'],
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  late String value;
-
-  HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class MySecondPage extends StatefulWidget {
-  String value;
-  MySecondPage(this.value);
-  @override
-  _MySecondPageState createState() => _MySecondPageState(myNum.yo);
-}
-
 class _HomePageState extends State<HomePage> {
-  late Future<Album> futureAlbum;
-
-  @override
-  void initState() {
-    super.initState();
-    futureAlbum = fetchAlbum();
-    print(futureAlbum);
-    print(fetchAlbum());
-  }
-
   File? _image;
   String url = "";
   String link = "http://34.66.246.198/?img=";
@@ -85,7 +66,7 @@ class _HomePageState extends State<HomePage> {
 
   final imagePicker = ImagePicker();
 
-  get futureAlbum1 => null;
+  get futureAlbum => null;
   Future getImage() async {
     final image = await imagePicker.getImage(source: ImageSource.camera);
 
@@ -174,23 +155,6 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Image.file(_image!),
           ),
-          Positioned(
-            top: 100,
-            child: FutureBuilder<Album>(
-              future: futureAlbum,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  myNum.yo = snapshot.data!.title;
-                  return Text("Press Select to continue");
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            ),
-          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -198,40 +162,16 @@ class _HomePageState extends State<HomePage> {
           uploadFile();
           print(" yooooooooooooooooooooooo");
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MySecondPage(myNum.yo)),
-          );
+          late Future<Album> futureAlbum;
+          @override
+          void initState() {
+            super.initState();
+            futureAlbum = fetchAlbum(enc);
+          }
         },
         child: Text('Select'),
         backgroundColor: Colors.green[700],
       ),
     );
-  }
-}
-
-class _MySecondPageState extends State<MySecondPage> {
-  String value;
-  _MySecondPageState(this.value);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(value),
-        ),
-        body: Stack(children: [
-          Positioned(top: 40, left: 120, child: Text(value)),
-          Positioned(
-            top: 250,
-            left: 120,
-            height: 50,
-            child: ElevatedButton(
-              child: Text('Go back to Home Screen'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ]));
   }
 }
