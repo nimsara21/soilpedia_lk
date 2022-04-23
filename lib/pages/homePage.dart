@@ -20,7 +20,6 @@ class _HomePage1State extends State<HomePage1> with TickerProviderStateMixin {
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
-        title: Text(''),
         backgroundColor: Colors.green,
       ),
       body: Column(

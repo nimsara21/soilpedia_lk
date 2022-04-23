@@ -11,7 +11,7 @@ class NavBar extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: const Text('Oflutter.com'),
-            accountEmail: const Text('example@gmail.com'),
+            accountEmail: const Text("_emailTextController.text"),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
@@ -30,14 +30,10 @@ class NavBar extends StatelessWidget {
                       'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
             ),
           ),
+          
           ListTile(
-            leading: const Icon(Icons.favorite),
-            title: const Text('Favorites'),
-            onTap: () => null,
-          ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Friends'),
+            leading: const Icon(Icons.file_copy),
+            title: const Text('Projects'),
             onTap: () => null,
           ),
           ListTile(
@@ -46,25 +42,25 @@ class NavBar extends StatelessWidget {
             onTap: () => null,
           ),
           ListTile(
-            leading: const Icon(Icons.notifications),
-            title: const Text('Request'),
+            leading: const Icon(Icons.rate_review),
+            title: const Text('Rate Us'),
             onTap: () => null,
-            trailing: ClipOval(
-              child: Container(
-                color: Colors.red,
-                width: 20,
-                height: 20,
-                child: const Center(
-                  child: Text(
-                    '8',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // trailing: ClipOval(
+            //   child: Container(
+            //     color: Colors.red,
+            //     width: 20,
+            //     height: 20,
+            //     child: const Center(
+            //       child: Text(
+            //         '8',
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 12,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ),
           const Divider(),
           ListTile(
