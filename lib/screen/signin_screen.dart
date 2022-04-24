@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:soilpedia_lk/pages/navPages/mainPage.dart';
 import 'package:soilpedia_lk/screen/reset_password.dart';
 import 'package:soilpedia_lk/screen/signup_screen.dart';
@@ -33,8 +34,7 @@ class _SignInScreenState extends State<SignInScreen> {
             padding: EdgeInsets.fromLTRB(
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
-              children: <Widget>[
-                logoWidget("assets/images/soimg.png"),
+              children: <Widget>[Lottie.network('https://assets3.lottiefiles.com/packages/lf20_w1GgMS.json'),
                 const SizedBox(
                   height: 30,
                 ),
@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 */
                 forgetPassword(context),
-                signInSignUpResetButton(context, "Sign In", () {
+                signInSignUpResetButton(context, "Login", () {
                   FirebaseAuth.instance
                       .signInWithEmailAndPassword(
                           email: _emailTextController.text,
@@ -99,7 +99,6 @@ class _SignInScreenState extends State<SignInScreen> {
       ],
     );
   }
-
 
   Widget forgetPassword(BuildContext context) {
     return Container(

@@ -32,7 +32,6 @@ class NavBar extends StatelessWidget {
                       'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
             ),
           ),
-          
           ListTile(
             leading: const Icon(Icons.file_copy),
             title: const Text('Projects'),
