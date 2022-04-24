@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:soilpedia_lk/screen/signin_screen.dart';
 
 class NavBar extends StatelessWidget {
+  const NavBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -68,10 +70,10 @@ class NavBar extends StatelessWidget {
             title: const Text('Settings'),
             onTap: () => null,
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text('Log Out '),
-            leading: Icon(Icons.exit_to_app),
+            title: const Text('Log Out '),
+            leading: const Icon(Icons.exit_to_app),
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const SignInScreen())),
           ),
