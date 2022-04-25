@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_windows-0.1.0/windows/include"
             ],
             "defines": [
                 "_DEBUG",
