@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soilpedia_lk/widgets/appText.dart';

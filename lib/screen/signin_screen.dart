@@ -1,10 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:soilpedia_lk/pages/homePage.dart';
-import 'package:soilpedia_lk/pages/navPages/camTest.dart';
-import 'package:soilpedia_lk/pages/navPages/gallery.dart';
 import 'package:soilpedia_lk/pages/navPages/mainPage.dart';
-import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/screen/reset_password.dart';
 import 'package:soilpedia_lk/screen/signup_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
@@ -18,8 +14,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +48,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 5,
                 ),
+                /*----------------------------------------------------------------------------
+                const Text(
+                  'The password you entered is incorrect. Please try again.',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.yellow),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                */
                 forgetPassword(context),
                 signInSignUpResetButton(context, "Sign In", () {
                   FirebaseAuth.instance
@@ -59,10 +63,12 @@ class _SignInScreenState extends State<SignInScreen> {
                           email: _emailTextController.text,
                           password: _passwordTextController.text)
                       .then((value) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MainPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainPage()));
                   }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
+                    debugPrint("Error ${error.toString()}");
                   });
                 }),
                 signUpOption()
@@ -83,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
         GestureDetector(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SignUpScreen()));
+                MaterialPageRoute(builder: (context) => const SignUpScreen()));
           },
           child: const Text(
             " Sign Up",
@@ -105,8 +111,10 @@ class _SignInScreenState extends State<SignInScreen> {
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ResetPasswordScreen())),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const ResetPasswordScreen())),
       ),
     );
   }
