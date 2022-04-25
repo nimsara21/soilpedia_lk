@@ -13,7 +13,7 @@ class NavBar extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: const Text('Oflutter.com'),
-            accountEmail: const Text("_emailTextController.text"),
+            accountEmail: const Text("example@iit.ac.lk"),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
