@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.soilpedia_lk">
    <application
-        android:label="soilpedia_lk"
+        android:label="SoilPediaLK"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
