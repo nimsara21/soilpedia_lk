@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
-Image logoWidget(String imageName) {
-  return Image.asset(
+LottieBuilder logoWidget(String imageName) {
+  return Lottie.network(
     imageName,
     fit: BoxFit.fitWidth,
-    width: 170,
-    height: 170,
-    color: Colors.white,
+    width: 270,
+    height: 250,
   );
 }
 

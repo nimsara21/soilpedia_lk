@@ -34,9 +34,11 @@ class _SignInScreenState extends State<SignInScreen> {
             padding: EdgeInsets.fromLTRB(
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
-              children: <Widget>[Lottie.network('https://assets3.lottiefiles.com/packages/lf20_w1GgMS.json'),
+              children: <Widget>[
+                logoWidget(
+                    "https://assets3.lottiefiles.com/packages/lf20_w1GgMS.json"),
                 const SizedBox(
-                  height: 30,
+                  height: 40,
                 ),
                 reusableTextField("Username", Icons.person_outline, false,
                     _emailTextController),
