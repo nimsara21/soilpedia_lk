@@ -41,7 +41,7 @@ dependencies:
   cloud_firestore: ^3.1.10
   geolocator: ^8.2.0
   geocoding:
-  fluttertoast:
+  fluttertoast: ^8.0.9
   firebase_database: ^9.0.8
   http: ^0.13.4
   
