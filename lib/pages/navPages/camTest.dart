@@ -218,88 +218,71 @@ class _MySecondPageState extends State<MySecondPage> {
   _MySecondPageState(this.value);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(value),
-        ),
-        body: Stack(children: [
-          Positioned(
-              child: Container(
-            width: double.maxFinite,
-            height: 350,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/welcome2.jpg"),
-                    fit: BoxFit.cover)),
-          )),
-          Positioned(
-              left: 40,
-              top: 70,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.menu),
-                    color: Colors.green[100],
-                  )
-                ],
-              )),
-          Positioned(
-              top: 315,
-              child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-                width: MediaQuery.of(context).size.width,
-                height: 500,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    )),
-                child: Column(
+      body: Container(
+        width: double.maxFinite,
+        height: double.maxFinite,
+        child: Stack(
+          children: [
+            Positioned(
+                child: Container(
+              width: double.maxFinite,
+              height: 350,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/welcome2.jpg"),
+                      fit: BoxFit.cover)),
+            )),
+            Positioned(
+                left: 40,
+                top: 70,
+                child: Row(
                   children: [
-                    Row(
-                      children: [
-                        AppLargeText(
-                          text: "Plant Name",
-                          color: Colors.black87,
-                          size: 30,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              //_determinePosition();
-                            },
-                            child: Text('Get Location')),
-                        AppLargeText(text: ""),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Colors.green,
-                        ),
-                        Text("currentAddress"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    AppLargeText(
-                      text: "Description",
-                      color: Colors.lightBlue,
-                    ),
-                    AppText(
-                        text:
-                            "If possible, your potting soil should be tailored to the particular type of plant you are growing.  African violets and ferns prefer soil with a high humus content, which can be achieved by adding leaf mold or shredded bark. Many kinds of orchids are happiest growing in nothing but fir bark or sphagnum moss.",
-                        color: Colors.black)
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.menu),
+                      color: Colors.green[100],
+                    )
                   ],
-                ),
-              )),
-          Positioned(top: 350, left: 120, child: Text(value)),
-        ]));
+                )),
+            Positioned(
+                top: 315,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+                  width: MediaQuery.of(context).size.width,
+                  height: 500,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      )),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          AppLargeText(
+                            text: value,
+                            color: Colors.black87,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppLargeText(
+                        text: "Description",
+                        color: Colors.lightBlue,
+                      ),
+                      AppText(text: "", color: Colors.black)
+                    ],
+                  ),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }
