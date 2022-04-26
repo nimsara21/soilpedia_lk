@@ -6,6 +6,7 @@ import 'package:soilpedia_lk/screen/reset_password.dart';
 import 'package:soilpedia_lk/screen/signup_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 import '../reusable/reusable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -70,6 +71,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         MaterialPageRoute(
                             builder: (context) => const MainPage()));
                   }).onError((error, stackTrace) {
+                                        Fluttertoast.showToast(
+                        msg: error.toString(), gravity: ToastGravity.TOP);
                     debugPrint("Error ${error.toString()}");
                   });
                 }),
