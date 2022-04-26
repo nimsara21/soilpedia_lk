@@ -46,12 +46,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  signInSignUpResetButton(context, "Reset Password", () {
-                    FirebaseAuth.instance
-                        .sendPasswordResetEmail(
-                            email: _emailTextController.text)
-                        .then((value) => Navigator.of(context).pop());
-                  }),
+                  signInSignUpResetButton(
+                    context,
+                    "Reset Password",
+                    () {
+                      FirebaseAuth.instance
+                          .sendPasswordResetEmail(
+                              email: _emailTextController.text)
+                          .then((value) => Navigator.of(context).pop());
+                    },
+                  ),
                 ],
               ),
             ))));

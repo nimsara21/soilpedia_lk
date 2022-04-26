@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class AppLargeText extends StatelessWidget {
     return Text(
       text,
       style:
-      TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold),
+          TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold),
     );
   }
 }
