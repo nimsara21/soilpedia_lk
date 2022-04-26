@@ -4,6 +4,8 @@ import 'package:soilpedia_lk/reusable/reusable.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 
+import '../pages/navPages/mainPage.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -60,21 +62,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  signInSignUpResetButton(context, "Sign Up", () {
-                    FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                            email: _emailTextController.text,
-                            password: _passwordTextController.text)
-                        .then((value) {
-                      debugPrint("Created New Account");
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
-                    }).onError((error, stackTrace) {
-                      debugPrint("Error $toString()");
-                    });
-                  })
+
+                  signInSignUpResetButton(
+                    context,
+                    "Sign Up",
+                    () {
+                      FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: _emailTextController.text,
+                              password: _passwordTextController.text)
+                          .then((value) {
+                        print("Created New Account");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MainPage()));
+                      }).onError((error, stackTrace) {
+                        print("Error $toString()");
+                      });
+                    },
+                  )
+
                 ],
               ),
             ))));
