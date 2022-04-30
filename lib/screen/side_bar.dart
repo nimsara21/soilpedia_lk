@@ -20,7 +20,8 @@ class NavBar extends StatelessWidget {
                   //profile picture
                   'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
                   fit: BoxFit.cover,
-                  width: 90, //image size
+                  //image size
+                  width: 90,
                   height: 90,
                 ),
               ),
