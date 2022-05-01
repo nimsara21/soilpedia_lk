@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:soilpedia_lk/pages/navPages/camTest.dart';
 import 'package:soilpedia_lk/pages/navPages/gallery.dart';
 import 'package:soilpedia_lk/pages/homePage.dart';
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
               label: ("Import"), icon: Icon(Icons.photo_library_rounded)),
           BottomNavigationBarItem(
-              label: ("Details"), icon: Icon(Icons.park_outlined)),
+              label: ("About Us"), icon: Icon(Icons.person_outline)),
         ],
       ),
     );

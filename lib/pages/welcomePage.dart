@@ -9,6 +9,11 @@ import 'package:soilpedia_lk/widgets/appLargeText.dart';
 import 'package:soilpedia_lk/widgets/appText.dart';
 import 'package:soilpedia_lk/widgets/responsiveButton.dart';
 
+import '../utils/colors.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
@@ -24,7 +29,7 @@ class _WelcomePageState extends State<WelcomePage> {
   ];
 
   List texts = [
-    "SoilpediaLK is an application that helps user...",
+    "Plant a tree, make our earth risk free",
     "Use your camera to easily capture",
     "Get instant results and plant suggetions"
   ];
@@ -67,11 +72,12 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         SizedBox(
                           width: 120,
-                          height: 60,
+                          height: 65,
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.green),
+                                hexStringToColor("#1b5e20"),
+                              ),
                             ),
                             onPressed: () {
                               Navigator.push(

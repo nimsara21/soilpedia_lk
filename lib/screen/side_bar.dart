@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:soilpedia_lk/screen/feedback.dart';
 import 'package:soilpedia_lk/screen/signin_screen.dart';
 
 class NavBar extends StatelessWidget {
@@ -45,7 +47,11 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.rate_review),
             title: const Text('Rate Us'),
-            onTap: () => null,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const FeedbackDialog()),
+            ),
+
             // trailing: ClipOval(
             //   child: Container(
             //     color: Colors.red,

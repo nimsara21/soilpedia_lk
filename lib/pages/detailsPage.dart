@@ -1,11 +1,15 @@
-// ignore_for_file: file_names
+// ignore_for_file: unnecessary_import, file_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:soilpedia_lk/pages/navPages/mainPage.dart';
+import 'package:soilpedia_lk/reusable/reusable.dart';
+import 'package:soilpedia_lk/screen/signin_screen.dart';
 import 'package:soilpedia_lk/widgets/appLargeText.dart';
 import 'package:soilpedia_lk/widgets/appText.dart';
+import 'package:soilpedia_lk/widgets/responsiveButton.dart';
+
+import '../utils/colors.dart';
 
 class detailsPage extends StatefulWidget {
   const detailsPage({Key? key}) : super(key: key);
@@ -15,138 +19,77 @@ class detailsPage extends StatefulWidget {
 }
 
 class _detailsPageState extends State<detailsPage> {
-  String currentAddress = 'Position';
-  late Position currentposition;
+  List images = [
+    "https://images.unsplash.com/photo-1503903587778-5124b6d043b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    "https://images.unsplash.com/photo-1473081556163-2a17de81fc97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    "https://images.unsplash.com/photo-1543076499-a6133cb932fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+  ];
 
-  Future _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Fluttertoast.showToast(msg: 'Please enable Your Location Service');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Fluttertoast.showToast(msg: 'Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      Fluttertoast.showToast(
-          msg:
-              'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    try {
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-
-      Placemark place = placemarks[0];
-
-      setState(() {
-        currentposition = position;
-        currentAddress =
-            "${place.locality}, ${place.postalCode}, ${place.country}";
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+  List texts = [
+    "We are Code Ninja",
+    "Use your camera to easily capture",
+    "Get instant results and plant suggetions"
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        child: Stack(
-          children: [
-            Positioned(
-                child: Container(
+      body: PageView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: images.length,
+          itemBuilder: (_, index) {
+            return Container(
               width: double.maxFinite,
-              height: 350,
+              height: double.maxFinite,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/welcome2.jpg"),
-                      fit: BoxFit.cover)),
-            )),
-            Positioned(
-                left: 40,
-                top: 70,
+                      image: NetworkImage(images[index]), fit: BoxFit.cover)),
+              child: Container(
+                margin: const EdgeInsets.only(top: 150, left: 10, right: 20),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.menu),
-                      color: Colors.green[100],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppLargeText(text: "About Us"),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: 250,
+                          child: AppText(
+                            text: texts[index],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 120,
+                          height: 65,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: List.generate(images.length, (indexDots) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 2),
+                          width: 8,
+                          height: index == indexDots ? 8 : 8,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: index == indexDots
+                                  ? Colors.green[700]
+                                  : Colors.white.withOpacity(0.8)),
+                        );
+                      }),
                     )
                   ],
-                )),
-            Positioned(
-                top: 315,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-                  width: MediaQuery.of(context).size.width,
-                  height: 500,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      )),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          AppLargeText(
-                            text: "Plant Name",
-                            color: Colors.black87,
-                            size: 30,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                _determinePosition();
-                              },
-                              child: Text('Get Location')),
-                          AppLargeText(text: ""),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Colors.green,
-                          ),
-                          Text(currentAddress),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      AppLargeText(
-                        text: "Description",
-                        color: Colors.lightBlue,
-                      ),
-                      AppText(
-                          text:
-                              "If possible, your potting soil should be tailored to the particular type of plant you are growing.  African violets and ferns prefer soil with a high humus content, which can be achieved by adding leaf mold or shredded bark. Many kinds of orchids are happiest growing in nothing but fir bark or sphagnum moss.",
-                          color: Colors.black)
-                    ],
-                  ),
-                ))
-          ],
-        ),
-      ),
+                ),
+              ),
+            );
+          }),
     );
   }
 }

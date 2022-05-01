@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 import 'package:soilpedia_lk/widgets/appLargeText.dart';
 
 import '../screen/side_bar.dart';
+
+class myLocation {
+  static late String current;
+}
 
 List a = [
   "https://images.unsplash.com/photo-1518994603110-1912b3272afd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=724&q=80",
@@ -29,120 +36,190 @@ class HomePage1 extends StatefulWidget {
 }
 
 class _HomePage1State extends State<HomePage1> with TickerProviderStateMixin {
+  String currentAddress = 'Position';
+  late Position currentposition;
+
+  Future _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Fluttertoast.showToast(msg: 'Please enable Your Location Service');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Fluttertoast.showToast(msg: 'Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Fluttertoast.showToast(
+          msg:
+              'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      Placemark place = placemarks[0];
+
+      setState(() {
+        currentposition = position;
+        currentAddress =
+            "${place.locality}, ${place.postalCode}, ${place.country}";
+        Fluttertoast.showToast(msg: "Getting Location");
+        Fluttertoast.showToast(msg: currentAddress);
+
+        myLocation.current = currentAddress;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TabController _controller = TabController(length: 3, vsync: this);
     return Scaffold(
-      drawer: NavBar(),
-      appBar: AppBar(
-        backgroundColor: hexStringToColor("#2C7744"),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 30, left: 20),
-            child: Row(
-              children: [
-                // Icon(
-                //   Icons.menu,
-                //   size: 30,
-                //   color: Colors.black,
-                // ),
-                Expanded(child: Container()),
-              ],
-            ),
-          ),
-
-          Container(
-            margin: const EdgeInsets.only(left: 20),
-            child: AppLargeText(
-              text: "SoilpediaLK",
-              color: Colors.cyan,
-              size: 40,
-            ),
-          ),
-          const SizedBox(height: 30),
-          //topbar
-          Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                labelPadding: const EdgeInsets.only(left: 30, right: 20),
-                controller: _controller,
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.grey,
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: const [
-                  Tab(
-                    text: "Plants",
-                  ),
-                  Tab(text: "Soils"),
-                  Tab(text: "Recent Searches"),
+        drawer: NavBar(),
+        appBar: AppBar(
+          backgroundColor: hexStringToColor("#2C7744"),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 30, left: 20),
+              child: Row(
+                children: [
+                  // Icon(
+                  //   Icons.menu,
+                  //   size: 30,
+                  //   color: Colors.black,
+                  // ),
+                  Expanded(child: Container()),
                 ],
-              )),
-          const SizedBox(height: 33),
-          Container(
-            padding: const EdgeInsets.only(left: 20, top: 5),
-            height: 300,
-            width: double.maxFinite,
-            child: TabBarView(
-              controller: _controller,
-              children: [
-                ListView.builder(
-                  itemCount: a.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 400,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              image: NetworkImage(a[index]),
-                              fit: BoxFit.cover)),
-                    );
-                  },
-                ),
-                ListView.builder(
-                  itemCount: b.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 400,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              image: NetworkImage(b[index]),
-                              fit: BoxFit.cover)),
-                    );
-                  },
-                ),
-                const Text("")
-              ],
+              ),
             ),
-          ),
-          // Container(
-          //     padding: const EdgeInsets.only(left: 110, top: 10),
-          //     child: ElevatedButton(
-          //       style: ButtonStyle(
-          //         backgroundColor:
-          //             MaterialStateProperty.all<Color>(Colors.green),
-          //       ),
-          //       onPressed: () {
-          //         Navigator.push(context,
-          //             MaterialPageRoute(builder: (context) => CameraPage()));
-          //       },
-          //       child: Text('Scan Using Camera',
-          //           style: TextStyle(fontSize: 20, color: Colors.white)),
-          //     )),
-        ],
-      ),
-    );
+
+            Container(
+              margin: const EdgeInsets.only(left: 20),
+              child: AppLargeText(
+                text: "SoilpediaLK",
+                color: Colors.cyan,
+                size: 40,
+              ),
+            ),
+            const SizedBox(height: 30),
+            //topbar
+            Align(
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  labelPadding: const EdgeInsets.only(left: 30, right: 20),
+                  controller: _controller,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  isScrollable: true,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  tabs: const [
+                    Tab(
+                      text: "Plants",
+                    ),
+                    Tab(text: "Soils"),
+                    Tab(text: "Recent Searches"),
+                  ],
+                )),
+            const SizedBox(height: 33),
+            Container(
+              padding: const EdgeInsets.only(left: 20, top: 5),
+              height: 300,
+              width: double.maxFinite,
+              child: TabBarView(
+                controller: _controller,
+                children: [
+                  ListView.builder(
+                    itemCount: a.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 15),
+                        width: 200,
+                        height: 400,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            image: DecorationImage(
+                                image: NetworkImage(a[index]),
+                                fit: BoxFit.cover)),
+                      );
+                    },
+                  ),
+                  ListView.builder(
+                    itemCount: b.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 15),
+                        width: 200,
+                        height: 400,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            image: DecorationImage(
+                                image: NetworkImage(b[index]),
+                                fit: BoxFit.cover)),
+                      );
+                    },
+                  ),
+                  const Text("")
+                ],
+              ),
+            ),
+            // Container(
+            //     padding: const EdgeInsets.only(left: 110, top: 10),
+            //     child: ElevatedButton(
+            //       style: ButtonStyle(
+            //         backgroundColor:
+            //             MaterialStateProperty.all<Color>(Colors.green),
+            //       ),
+            //       onPressed: () {
+            //         Navigator.push(context,
+            //             MaterialPageRoute(builder: (context) => CameraPage()));
+            //       },
+            //       child: Text('Scan Using Camera',
+            //           style: TextStyle(fontSize: 20, color: Colors.white)),
+            //     )),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.green,
+            onPressed: () {},
+            child: Ink(
+              decoration: const ShapeDecoration(
+                color: Colors.green,
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.location_pin),
+                color: Colors.white,
+                onPressed: () {
+                  _determinePosition();
+                  if (currentposition != null) {
+                    Fluttertoast.showToast(msg: 'Getting Location...');
+                    Fluttertoast.showToast(msg: currentAddress);
+                  }
+
+                  print(" Location: " + currentAddress);
+                },
+              ),
+            )));
   }
 }
