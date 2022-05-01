@@ -13,6 +13,7 @@ import '../../widgets/appText.dart';
 
 class myNum {
   static late String yo;
+  static late String link;
 }
 
 class CameraPage extends StatelessWidget {
@@ -26,8 +27,7 @@ class CameraPage extends StatelessWidget {
 }
 
 Future<Album> fetchAlbum() async {
-  final response = await http
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+  final response = await http.get(Uri.parse(myNum.link));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -41,15 +41,21 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
-  final String title;
+  final int plantId;
+  final String soilName;
+  final String plantName;
 
   const Album({
-    required this.title,
+    required this.plantName,
+    required this.plantId,
+    required this.soilName,
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      title: json['title'],
+      plantName: json['plantName'],
+      plantId: json['plantId'],
+      soilName: json['soilName'],
     );
   }
 }
@@ -83,8 +89,8 @@ class _HomePageState extends State<HomePage> {
 
   File? _image;
   String url = "";
-  String link = "http://34.66.246.198/?img=";
-  String enc = "";
+  String serverIP = "http://34.66.246.198/?img=";
+  String getReqLink = "";
 
   final imagePicker = ImagePicker();
 
@@ -127,7 +133,8 @@ class _HomePageState extends State<HomePage> {
         .set({"imageUrl": url});
 
     print(url);
-    enc = link +
+    myNum.link = serverIP + url;
+    getReqLink = serverIP +
         "https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsign-in-page-1ebaa.appspot.com%2Fo%2F1648985227598%252F.jpg%3Falt%3Dmedia%26token%3Df60ba203-1059-4b27-a4b9-d34ac2249c66";
   }
 
@@ -163,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialStateProperty.all<Color>(Colors.green),
                 ),
                 onPressed: getImage,
-                child: Text('Scan',
+                child: const Text('Scan',
                     style: TextStyle(fontSize: 20, color: Colors.white)),
               )),
           Positioned(
@@ -172,7 +179,7 @@ class _HomePageState extends State<HomePage> {
             height: 470,
             width: 420,
             child: _image == null
-                ? Center(
+                ? const Center(
                     child: Text('Press the button to capture the image'),
                   )
                 : Image.file(_image!),
@@ -183,8 +190,9 @@ class _HomePageState extends State<HomePage> {
               future: futureAlbum,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  myNum.yo = snapshot.data!.title;
-                  return Text("Press Select to continue");
+                  // myNum.yo = snapshot.data!.soilName;
+                  myNum.yo = "snapshot.data!.soilName";
+                  return const Text("Press Select to continue");
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
@@ -206,7 +214,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => MySecondPage(myNum.yo)),
           );
         },
-        child: Text('Select'),
+        child: const Text('Select'),
         backgroundColor: Colors.green[700],
       ),
     );
@@ -229,7 +237,7 @@ class _MySecondPageState extends State<MySecondPage> {
                 child: Container(
               width: double.maxFinite,
               height: 350,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/images/welcome2.jpg"),
                       fit: BoxFit.cover)),
@@ -241,7 +249,7 @@ class _MySecondPageState extends State<MySecondPage> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.menu),
+                      icon: const Icon(Icons.menu),
                       color: Colors.green[100],
                     )
                   ],
