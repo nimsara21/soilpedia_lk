@@ -4,16 +4,31 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:soilpedia_lk/main.dart';
+import 'package:soilpedia_lk/pages/homePage.dart';
 
 import '../../widgets/appLargeText.dart';
 import '../../widgets/appText.dart';
 
+Future<void> delay(int seconds) async {
+  print("delaying");
+  await Future.delayed(Duration(seconds: seconds));
+  print("delay stopped");
+}
+
 class myNum {
-  static late String yo;
+  static late String plantN;
+  static late String soil;
+  static late String wateringLevel;
+  static late String fertilizers;
+  static late String wateringFrequency;
   static late String link;
+  static late String currentLocation;
 }
 
 class CameraPage extends StatelessWidget {
@@ -73,7 +88,7 @@ class MySecondPage extends StatefulWidget {
   String value;
   MySecondPage(this.value);
   @override
-  _MySecondPageState createState() => _MySecondPageState(myNum.yo);
+  _MySecondPageState createState() => _MySecondPageState(myNum.plantN);
 }
 
 class _HomePageState extends State<HomePage> {
@@ -118,6 +133,28 @@ class _HomePageState extends State<HomePage> {
 
   //   print(url);
   // }
+
+  void getInfo() async {
+    http.get(
+        Uri.parse('http://35.160.71.50/api/soil/?soil=45z79kkiish0y0xne0gs'),
+        headers: {
+          "Authorization": "Token 87d61bd2475d7ee3ddf24cb148e84d8f1557b3f4"
+        }).then((http.Response response) {
+      final int statusCode = response.statusCode;
+
+      var scores = jsonDecode(response.body);
+      for (var i = 0; i < scores[0]['plants'].length; i++) {
+        myNum.plantN = scores[0]['plants'][2]['plantName'];
+        myNum.wateringLevel = scores[0]['plants'][2]['wateringLevel'];
+        myNum.fertilizers = scores[0]['plants'][2]['fertilizers'];
+        myNum.wateringFrequency = scores[0]['plants'][2]['wateringFrequency'];
+        myNum.soil = "soilType";
+
+        print("this is the plant");
+        print(scores[0]['plants'][2]['wateringFrequency']);
+      }
+    });
+  }
 
   uploadFile() async {
     String name = DateTime.now().millisecondsSinceEpoch.toString();
@@ -191,7 +228,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   // myNum.yo = snapshot.data!.soilName;
-                  myNum.yo = "snapshot.data!.soilName";
+
                   return const Text("Press Select to continue");
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
@@ -205,13 +242,19 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+          Fluttertoast.showToast(msg: "Uploading File");
+          Fluttertoast.showToast(msg: "Retrieving Information");
+
           uploadFile();
-          print(" yooooooooooooooooooooooo");
+          getInfo();
+          await delay(4);
+
+          print(" Uploaded Successfully.");
 
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MySecondPage(myNum.yo)),
+            MaterialPageRoute(builder: (context) => MySecondPage(myNum.plantN)),
           );
         },
         child: const Text('Select'),
@@ -271,7 +314,7 @@ class _MySecondPageState extends State<MySecondPage> {
                       Row(
                         children: [
                           AppLargeText(
-                            text: value,
+                            text: myNum.soil,
                             color: Colors.black87,
                             size: 20,
                           ),
@@ -280,11 +323,29 @@ class _MySecondPageState extends State<MySecondPage> {
                       const SizedBox(
                         height: 10,
                       ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.green,
+                          ),
+                          Text(myLocation.current),
+                        ],
+                      ),
+                      SizedBox(height: 6),
                       AppLargeText(
-                        text: "Description",
+                        text: myNum.plantN,
                         color: Colors.lightBlue,
                       ),
-                      AppText(text: "", color: Colors.black)
+                      SizedBox(height: 6),
+                      AppText(
+                          text: "Fertilizers: " +
+                              myNum.fertilizers +
+                              " \nWatering Level: " +
+                              myNum.wateringLevel +
+                              " \nWatering Frequency: " +
+                              myNum.wateringFrequency,
+                          color: Colors.black)
                     ],
                   ),
                 ))
