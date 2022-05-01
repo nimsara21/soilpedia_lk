@@ -1,17 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:soilpedia_lk/pages/navPages/mainPage.dart';
 import 'package:soilpedia_lk/screen/reset_password.dart';
 import 'package:soilpedia_lk/screen/signup_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
 import '../reusable/reusable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class details {
+  static late String email;
 }
 
 class _SignInScreenState extends State<SignInScreen> {
@@ -35,12 +40,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget("assets/images/soimg.png"),
+                logoWidget(
+                    "https://assets3.lottiefiles.com/packages/lf20_w1GgMS.json"),
                 const SizedBox(
-                  height: 30,
+                  height: 40,
                 ),
-                reusableTextField("Username", Icons.person_outline, false,
-                    _emailTextController),
+                reusableTextField(
+                    "Email", Icons.person_outline, false, _emailTextController),
                 const SizedBox(
                   height: 20,
                 ),
@@ -58,12 +64,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 */
                 forgetPassword(context),
-                signInSignUpResetButton(context, "Sign In", () {
+                signInSignUpResetButton(context, "Login", () {
                   FirebaseAuth.instance
                       .signInWithEmailAndPassword(
                           email: _emailTextController.text,
                           password: _passwordTextController.text)
                       .then((value) {
+                    details.email = _emailTextController.text;
                     Navigator.push(
                         context,
                         MaterialPageRoute(

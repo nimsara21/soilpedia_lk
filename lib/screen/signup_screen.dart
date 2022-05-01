@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:soilpedia_lk/reusable/reusable.dart';
 import 'package:soilpedia_lk/screen/home_screen.dart';
 import 'package:soilpedia_lk/utils/colors.dart';
@@ -76,6 +77,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             MaterialPageRoute(
                                 builder: (context) => MainPage()));
                       }).onError((error, stackTrace) {
+                        Fluttertoast.showToast(
+                            msg: error.toString(), gravity: ToastGravity.TOP);
                         print("Error $toString()");
                       });
                     },

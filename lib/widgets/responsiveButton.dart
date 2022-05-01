@@ -24,6 +24,7 @@ class ResponsiveButton extends StatelessWidget {
         children: [
           AppText(
             text: "Continue",
+            color: Colors.white,
             size: 20,
           )
         ],
