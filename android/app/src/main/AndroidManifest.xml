@@ -7,7 +7,7 @@
 
 
    <application
-        android:label="soilpedia_lk"
+        android:label="SoilpediaLK"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
