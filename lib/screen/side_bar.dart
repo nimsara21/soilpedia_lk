@@ -47,8 +47,10 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.rate_review),
             title: const Text('Rate Us'),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const FeedbackDialog())),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const FeedbackDialog())),
             // trailing: ClipOval(
             //   child: Container(
             //     color: Colors.red,
