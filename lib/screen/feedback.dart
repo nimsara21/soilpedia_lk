@@ -47,9 +47,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         ),
         TextButton(
           child: const Text('Send'),
-          onPressed: () async {
-
-          },
+          onPressed: () => Navigator.pop(context, true),
         )
       ],
     );
