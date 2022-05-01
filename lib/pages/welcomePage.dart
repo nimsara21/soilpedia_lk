@@ -2,6 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soilpedia_lk/pages/navPages/mainPage.dart';
+import 'package:soilpedia_lk/reusable/reusable.dart';
+import 'package:soilpedia_lk/screen/signin_screen.dart';
 import 'package:soilpedia_lk/widgets/appLargeText.dart';
 import 'package:soilpedia_lk/widgets/appText.dart';
 import 'package:soilpedia_lk/widgets/responsiveButton.dart';
@@ -25,6 +28,8 @@ class _WelcomePageState extends State<WelcomePage> {
     "Use your camera to easily capture",
     "Get instant results and plant suggetions"
   ];
+
+  List buttonText = ["Continue", "Continue", "Get Started"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,24 +53,38 @@ class _WelcomePageState extends State<WelcomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppLargeText(text: "Welcome to SoilpediaLK"),
-                        AppText(
-                          text: texts[index],
-                        ),
                         SizedBox(
                           height: 20,
                         ),
                         Container(
                           width: 250,
                           child: AppText(
-                              text:
-                                  "SoilpeidaLK is an app that helps you to..."),
+                            text: texts[index],
+                          ),
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        ResponsiveButton(
-                          width: 150,
-                        )
+                        SizedBox(
+                          width: 120,
+                          height: 60,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignInScreen()),
+                              );
+                            },
+                            child: Text(buttonText[index],
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white)),
+                          ),
+                        ),
                       ],
                     ),
                     Column(
