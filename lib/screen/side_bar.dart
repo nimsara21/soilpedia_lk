@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:soilpedia_lk/screen/signin_screen.dart';
 
+import 'feedback.dart';
+
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
 
@@ -45,7 +47,8 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.rate_review),
             title: const Text('Rate Us'),
-            onTap: () => null,
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const FeedbackDialog())),
             // trailing: ClipOval(
             //   child: Container(
             //     color: Colors.red,

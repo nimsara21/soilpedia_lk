@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:soilpedia_lk/pages/welcomePage.dart';
 import 'package:soilpedia_lk/screen/signin_screen.dart';
 
 void main() async {
