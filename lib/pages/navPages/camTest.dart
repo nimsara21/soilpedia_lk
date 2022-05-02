@@ -15,6 +15,7 @@ import 'package:soilpedia_lk/pages/homePage.dart';
 import '../../widgets/appLargeText.dart';
 import '../../widgets/appText.dart';
 
+List<List<String>> plantsInfo = [];
 Future<void> delay(int seconds) async {
   print("delaying");
   await Future.delayed(Duration(seconds: seconds));
@@ -88,7 +89,7 @@ class MySecondPage extends StatefulWidget {
   String value;
   MySecondPage(this.value);
   @override
-  _MySecondPageState createState() => _MySecondPageState(myNum.plantN);
+  _MySecondPageState createState() => _MySecondPageState("myNum.plantN");
 }
 
 class _HomePageState extends State<HomePage> {
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
 
   File? _image;
   String url = "";
-  String serverIP = "http://34.66.246.198/?img=";
+  String serverIP = "http://35.160.71.50/api/soil/?soil=";
   String getReqLink = "";
 
   final imagePicker = ImagePicker();
@@ -134,31 +135,9 @@ class _HomePageState extends State<HomePage> {
   //   print(url);
   // }
 
-  void getInfo() async {
-    http.get(
-        Uri.parse('http://35.160.71.50/api/soil/?soil=45z79kkiish0y0xne0gs'),
-        headers: {
-          "Authorization": "Token 87d61bd2475d7ee3ddf24cb148e84d8f1557b3f4"
-        }).then((http.Response response) {
-      final int statusCode = response.statusCode;
-
-      var scores = jsonDecode(response.body);
-      for (var i = 0; i < scores[0]['plants'].length; i++) {
-        myNum.plantN = scores[0]['plants'][2]['plantName'];
-        myNum.wateringLevel = scores[0]['plants'][2]['wateringLevel'];
-        myNum.fertilizers = scores[0]['plants'][2]['fertilizers'];
-        myNum.wateringFrequency = scores[0]['plants'][2]['wateringFrequency'];
-        myNum.soil = "soilType";
-
-        print("this is the plant");
-        print(scores[0]['plants'][2]['wateringFrequency']);
-      }
-    });
-  }
-
   uploadFile() async {
     String name = DateTime.now().millisecondsSinceEpoch.toString();
-    var imageFile = FirebaseStorage.instance.ref().child(name).child("/.jpg");
+    var imageFile = FirebaseStorage.instance.ref().child(name).child("/.png");
     UploadTask task = imageFile.putFile(_image!);
     TaskSnapshot snapshot = await task;
 
@@ -168,11 +147,41 @@ class _HomePageState extends State<HomePage> {
         .collection("images")
         .doc()
         .set({"imageUrl": url});
-
+    print("This is the image URL");
     print(url);
-    myNum.link = serverIP + url;
-    getReqLink = serverIP +
-        "https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsign-in-page-1ebaa.appspot.com%2Fo%2F1648985227598%252F.jpg%3Falt%3Dmedia%26token%3Df60ba203-1059-4b27-a4b9-d34ac2249c66";
+    print("Full Link with server IP");
+    var encoded = Uri.encodeFull(url);
+    print(encoded);
+    myNum.link = serverIP + encoded;
+    print(myNum.link);
+  }
+
+  Future<String> getInfo() async {
+    print("testing the link");
+    print(myNum.link);
+    await http.get(Uri.parse(myNum.link), headers: {
+      "Authorization": "Token 87d61bd2475d7ee3ddf24cb148e84d8f1557b3f4"
+    }).then((http.Response response) {
+      print("Link");
+      print(serverIP + url);
+      final int statusCode = response.statusCode;
+
+      var scores = jsonDecode(response.body);
+
+      myNum.soil = scores[0]['soilName'];
+      for (var i = 0; i < scores[0]['plants'].length; i++) {
+        List<String> justList = [];
+        justList.insert(0, scores[0]['plants'][i]['plantName']);
+        justList.insert(1, scores[0]['plants'][i]['wateringLevel']);
+        justList.insert(2, scores[0]['plants'][i]['fertilizers']);
+        justList.insert(3, scores[0]['plants'][i]['wateringFrequency']);
+        justList.insert(4, scores[0]['plants'][i]['plantImage']);
+        plantsInfo.insert(i, justList);
+
+        print("this is the plant");
+      }
+    });
+    return "test";
   }
 
   @override
@@ -231,7 +240,7 @@ class _HomePageState extends State<HomePage> {
 
                   return const Text("Press Select to continue");
                 } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+                  return Text(" ");
                 }
 
                 // By default, show a loading spinner.
@@ -246,15 +255,17 @@ class _HomePageState extends State<HomePage> {
           Fluttertoast.showToast(msg: "Uploading File");
           Fluttertoast.showToast(msg: "Retrieving Information");
 
-          uploadFile();
-          getInfo();
-          await delay(4);
+          await uploadFile();
+          plantsInfo.clear();
+          // sleep(Duration(seconds: 10));
+          await getInfo();
 
           print(" Uploaded Successfully.");
+          print(plantsInfo.length);
 
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MySecondPage(myNum.plantN)),
+            MaterialPageRoute(builder: (context) => MySecondPage("app")),
           );
         },
         child: const Text('Select'),
@@ -269,89 +280,83 @@ class _MySecondPageState extends State<MySecondPage> {
   _MySecondPageState(this.value);
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        child: Stack(
-          children: [
-            Positioned(
-                child: Container(
+      body: PageView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: plantsInfo.length,
+          itemBuilder: (_, index) {
+            print(index);
+            return Container(
               width: double.maxFinite,
-              height: 350,
-              decoration: const BoxDecoration(
+              height: double.maxFinite,
+              decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/welcome2.jpg"),
+                      image: NetworkImage(plantsInfo[index][4]),
                       fit: BoxFit.cover)),
-            )),
-            Positioned(
-                left: 40,
-                top: 70,
+              child: Container(
+                margin: const EdgeInsets.only(top: 150, left: 10, right: 20),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.menu),
-                      color: Colors.green[100],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppLargeText(text: plantsInfo[index][0]),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: 250,
+                          child: AppText(
+                            text: "Watering Level: " + plantsInfo[index][1],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: 250,
+                          child: AppText(
+                            text: "Watering Frequency: " + plantsInfo[index][3],
+                          ),
+                        ),
+                        Container(
+                          width: 250,
+                          child: AppText(
+                            text: "Fertilizers: " + plantsInfo[index][2],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 120,
+                          height: 65,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: List.generate(plantsInfo.length, (indexDots) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 2),
+                          width: 8,
+                          height: index == indexDots ? 8 : 8,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: index == indexDots
+                                  ? Colors.green[700]
+                                  : Colors.white.withOpacity(0.8)),
+                        );
+                      }),
                     )
                   ],
-                )),
-            Positioned(
-                top: 315,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-                  width: MediaQuery.of(context).size.width,
-                  height: 500,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      )),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          AppLargeText(
-                            text: myNum.soil,
-                            color: Colors.black87,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Colors.green,
-                          ),
-                          Text(myLocation.current),
-                        ],
-                      ),
-                      SizedBox(height: 6),
-                      AppLargeText(
-                        text: myNum.plantN,
-                        color: Colors.lightBlue,
-                      ),
-                      SizedBox(height: 6),
-                      AppText(
-                          text: "Fertilizers: " +
-                              myNum.fertilizers +
-                              " \nWatering Level: " +
-                              myNum.wateringLevel +
-                              " \nWatering Frequency: " +
-                              myNum.wateringFrequency,
-                          color: Colors.black)
-                    ],
-                  ),
-                ))
-          ],
-        ),
-      ),
+                ),
+              ),
+            );
+          }),
     );
   }
 }
