@@ -26,9 +26,9 @@ class _detailsPageState extends State<detailsPage> {
   ];
 
   List texts = [
-    "We are Code Ninja",
-    "Use your camera to easily capture",
-    "Get instant results and plant suggetions"
+    "We are a group of Level 5 Computer Science Students following the SDGP module",
+    "Code Ninja | SDGP CS-15",
+    "Maneth Pirisyala, Nimsara Nanyakkara, Amaanie Yoosuf, Dinun Ranasinghe, Gihan Athulathmudali",
   ];
 
   @override

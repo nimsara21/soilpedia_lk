@@ -302,14 +302,19 @@ class _MySecondPageState extends State<MySecondPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppLargeText(text: plantsInfo[index][0]),
+                        AppLargeText(
+                          text: plantsInfo[index][0],
+                          size: 50,
+                        ),
                         SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Container(
                           width: 250,
                           child: AppText(
                             text: "Watering Level: " + plantsInfo[index][1],
+                            size: 20,
+                            color: Colors.white,
                           ),
                         ),
                         SizedBox(
@@ -319,12 +324,16 @@ class _MySecondPageState extends State<MySecondPage> {
                           width: 250,
                           child: AppText(
                             text: "Watering Frequency: " + plantsInfo[index][3],
+                            size: 15,
+                            color: Colors.white,
                           ),
                         ),
                         Container(
                           width: 250,
                           child: AppText(
                             text: "Fertilizers: " + plantsInfo[index][2],
+                            size: 15,
+                            color: Colors.white,
                           ),
                         ),
                         SizedBox(

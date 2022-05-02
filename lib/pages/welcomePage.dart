@@ -23,9 +23,9 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   List images = [
-    "welcome2.jpg",
-    "welcome1.jpg",
     "welcome3.jpg",
+    "welcome2.jpg",
+    "welcome5.jpg",
   ];
 
   List texts = [
@@ -76,7 +76,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                hexStringToColor("#1b5e20"),
+                                hexStringToColor("#003300"),
                               ),
                             ),
                             onPressed: () {
